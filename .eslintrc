@@ -1,0 +1,15 @@
+{
+	"env": {
+		"node": true
+	},
+	"globals": {
+		"currencies": true
+	},
+	"rules": {
+		"quotes": [1, "single", "avoid-escape"],
+		"no-use-before-define": ["nofunc"],
+		"no-shadow": [false],
+		"no-labels": [false],
+		"no-wrap-func": [false]
+	}
+}
