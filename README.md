@@ -58,7 +58,7 @@ The result is a new object, and does not affect the original object. Additionall
 ```js
 assert.deepEqual(
     color.convert('lab').convert('hsl').convert('rgb').convert('xyz').values,
-    color.convert('xyz')
+    color.convert('xyz').values
 );
 ```
 
@@ -82,7 +82,7 @@ Color Operations
 color1.add(color2);
 ```
 
-All operations accept a color as the first and only argument. The available color operations are add, subtract, multiply, divide, screen, overlay, dodge, burn.
+All operations accept a color as the first and only argument. The available color operations are `add`, `subtract`, `multiply`, `divide`, `screen`, `overlay`, `dodge`, `burn`.
 
 All operations are done via RGB.
 
