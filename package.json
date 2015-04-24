@@ -1,7 +1,8 @@
 {
   "name": "color-forge",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple color system based on the work of https://github.com/dfcreative/color-space",
+  "url": "https://github.com/jacobp100/color-forge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
