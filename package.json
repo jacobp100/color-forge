@@ -1,6 +1,6 @@
 {
   "name": "color-forge",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A simple color system based on the work of https://github.com/dfcreative/color-space",
   "url": "https://github.com/jacobp100/color-forge",
   "main": "index.js",
