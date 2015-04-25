@@ -29,7 +29,7 @@ assert.about = function about(a, b) {
 			throw new Error('Expected values to be about equal (' + a.toString() + ' and ' + b.toString() + ')');
 		}
 	} else {
-		throw new Error('Color spaces do not match');
+		throw new Error('Color spaces do not match (' + a.space + ' and ' + b.space + ')');
 	}
 };
 

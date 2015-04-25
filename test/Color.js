@@ -29,7 +29,7 @@ assert.about = function about(a, b) {
 			throw new Error('Expected values to be about equal (' + a.toString() + ' and ' + b.toString() + ')');
 		}
 	} else {
-		throw new Error('Color spaces do not match');
+		throw new Error('Color spaces do not match (' + a.space + ' and ' + b.space + ')');
 	}
 };
 
@@ -76,6 +76,12 @@ describe('Color', function() {
 			Color.hex('#123456').convert('hsl').convert('hsv').convert('cmyk').convert('lab').convert('rgb').values,
 			Color.hex('#123456').values
 		);
+	});
+	it('Should mix colours via different modes', function() {
+		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'rgb').convert('rgb'), Color.hex('#7f7f00'));
+		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'hsl').convert('rgb'), Color.hex('#ffff00'));
+		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'hsv').convert('rgb'), Color.hex('#ffff00'));
+		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'lab').convert('rgb'), Color.hex('#c9ab00'));
 	});
 	// Conformance with http://sassmeister.com (where 25 on there is 0.25 here)
 	it('Should darken colours via rgb', function() {

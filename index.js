@@ -176,21 +176,27 @@ color.
 @param {Color.spaces} [mode='rgb'] - The space in which to perform the mix,
 	with different spaces giving different outputs
 */
-Color.prototype.mix = function mix(other, amount, mode) {
-	if (amount === undefined) {
+Color.prototype.mix = function mix(other, amountMode, mode) {
+	var amount;
+
+	if (mode === undefined) {
+		if (typeof amountMode === 'number') {
+			amount = amountMode;
+			mode = 'rgb';
+		} else {
+			amount = 0.5;
+			mode = amountMode;
+		}
+	} if (amountMode === undefined) {
 		amount = 0.5;
 	}
 
-	if (mode === undefined) {
-		mode = 'rgb';
-	}
-
-	var a = this.convert(mode);
-	var b = other.convert(mode);
+	var thisValues = this.convert(mode).values;
+	var otherValues = other.convert(mode).values;
 
 	var colorMode = colorSpace[mode];
 
-	var values = zipValues(a, b).map(function zippedValues(zip, index) {
+	var values = zipValues(thisValues, otherValues).map(function zippedValues(zip, index) {
 		var a = zip[0];
 		var b = zip[1];
 
@@ -199,10 +205,10 @@ Color.prototype.mix = function mix(other, amount, mode) {
 
 			if (Math.abs(a - b) <= 180) {
 				// Clockwise (I guess?)
-				value = a + (a - b) * amount;
+				value = a - (a - b) * amount;
 			} else {
 				// Anti-clockwise
-				value = a - (a - b) * amount;
+				value = a + (a - b) * amount;
 			}
 
 			if (value < 0) {
@@ -213,8 +219,14 @@ Color.prototype.mix = function mix(other, amount, mode) {
 				return value;
 			}
 		} else {
-			return a + (a - b) * amount;
+			return a * (1 - amount) + b * amount;
 		}
+	}).map(function(value, index) {
+		// Clip values
+		var max = colorMode.max[index];
+		var min = colorMode.min[index];
+
+		return Math.min(max, Math.max(min, value));
 	});
 	var alpha = this.alpha + (this.alpha - other.alpha) * amount;
 
