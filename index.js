@@ -417,7 +417,7 @@ The resulting color has channels clipped at a maximum of 255.
 */
 Color.prototype.exponent = function exponent(power) {
 	var values = this.convert('rgb').values.map(function(value) {
-		return Math.min(Math.pow(value / 255, power), 255) * 255;
+		return Math.min(Math.pow(value / 255, power), 1) * 255;
 	});
 	var alpha = Math.pow(this.alpha, power);
 

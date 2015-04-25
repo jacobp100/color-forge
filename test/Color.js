@@ -168,5 +168,7 @@ describe('Color', function() {
 		assert.about(Color.hex('#1118').exponent(2), Color.hex('#01010149'));
 		assert.about(Color.hex('#8888').exponent(2), Color.hex('#49494949'));
 		assert.about(Color.hex('#fff8').exponent(2), Color.hex('#ffffff49'));
+
+		assert.about(Color.hex('#fff').exponent(-2), Color.hex('#ffffff'));
 	});
 });
