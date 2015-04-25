@@ -270,19 +270,21 @@ Color.prototype.darken = function darken(amount, mode) {
 /**
 Returns a new color that is the result of adding the channels of the current
 color and another color. The resulting color has channels clipped at a maximum
-of 255.
+of 255, and an alpha equal to the square root of the sum of the squares of the
+alpha values clipped at one.
 
 @function
 
 @param {Color} other - The other color used to perform the operation
 */
 Color.prototype.add = colorOperationFactory(function add(zip) {
-	return Math.max(zip[0] + zip[1], 255);
-});
+	return Math.min(zip[0] + zip[1], 255);
+}, addSubtractAlphaFn);
 /**
 Returns a new color that is the result of subtracting the channels of the
 current color and another color. The resulting color has channels clipped at a
-minimum of 0.
+minimum of 0, and an alpha equal to the square root of the sum of the squares
+of the alpha values clipped at one.
 
 @function
 
@@ -290,7 +292,7 @@ minimum of 0.
 */
 Color.prototype.subtract = colorOperationFactory(function subtract(zip) {
 	return Math.max(zip[0] - zip[1], 0);
-});
+}, addSubtractAlphaFn);
 /**
 Returns a new color that is the result of multiplying the channels of the
 current color and another color.
@@ -576,13 +578,26 @@ Color.css = function css(string, alpha) {
 
 
 
-function colorOperationFactory(operation) {
+function colorOperationFactory(operation, alphaFn) {
 	return function(other) {
 		var a = this.convert('rgb');
 		var b = other.convert('rgb');
 
-		var values = zipValues(a.values, b.values).map(operation);
-		var alpha = operation([this.alpha * 255, other.alpha * 255]) / 255;
+		if (!alphaFn) {
+			alphaFn = function defaultAlphaFn(a, b) {
+				return operation([a * 255, b * 255]) / 255;
+			};
+		}
+
+		var aValues = a.values.map(function(value) {
+			return value * a.alpha;
+		});
+		var bValues = b.values.map(function(value) {
+			return value * b.alpha;
+		});
+
+		var values = zipValues(aValues, bValues).map(operation);
+		var alpha = alphaFn(a.alpha, b.alpha);
 
 		return new Color(values, alpha, 'rgb');
 	};
@@ -606,6 +621,10 @@ function hexDouble(value) {
 	} else {
 		return '0' + hex;
 	}
+}
+
+function addSubtractAlphaFn(a, b) {
+	return Math.min(Math.sqrt(a * a + b * b), 1);
 }
 
 
