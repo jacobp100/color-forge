@@ -21,7 +21,7 @@ assert.about = function about(a, b) {
 			var range = colorMode.max[index] - colorMode.min[index];
 
 			return Math.abs(a - b) < PERCENT_ALLOWANCE * 100 / range; // Within some percent
-		});
+		}) && (Math.abs(a.alpha - b.alpha) * 100 < PERCENT_ALLOWANCE);
 
 		if (aboutEqual) {
 			return true;

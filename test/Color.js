@@ -21,7 +21,7 @@ assert.about = function about(a, b) {
 			var range = colorMode.max[index] - colorMode.min[index];
 
 			return Math.abs(a - b) < PERCENT_ALLOWANCE * 100 / range; // Within some percent
-		});
+		}) && (Math.abs(a.alpha - b.alpha) * 100 < PERCENT_ALLOWANCE);
 
 		if (aboutEqual) {
 			return true;
@@ -57,7 +57,8 @@ describe('Color', function() {
 		assert.equal(Color.hex('#888').toHex(), '#888888');
 		assert.equal(Color.hex('#888888').toHex(), '#888888');
 		assert.equal(Color.hex('#fff').toHex(), '#ffffff');
-		assert.equal(Color.hex('#ffffff80').toHex(), '#ffffff80');
+		assert.equal(Color.hex('#fff8').toHex(), '#ffffff88');
+		assert.equal(Color.hex('#ffffff88').toHex(), '#ffffff88');
 	});
 	it('Should convert values to css colour names', function() {
 		assert.equal(Color.hex('#f00').toCss(), 'red');
@@ -82,34 +83,63 @@ describe('Color', function() {
 		assert.about(Color.hex('#789').multiply(Color.hex('#101')), Color.hex('#08000a'));
 		assert.about(Color.hex('#112').multiply(Color.hex('#131')), Color.hex('#010303'));
 		assert.about(Color.hex('#415').multiply(Color.hex('#160')), Color.hex('#050700'));
+
+		assert.about(Color.hex('#1238').multiply(Color.hex('#4568')), Color.hex('#050b1449'));
+		assert.about(Color.hex('#7898').multiply(Color.hex('#1018')), Color.hex('#08000a49'));
+		assert.about(Color.hex('#1128').multiply(Color.hex('#1318')), Color.hex('#01030349'));
+		assert.about(Color.hex('#4158').multiply(Color.hex('#1608')), Color.hex('#05070049'));
 	});
 	it('Should screen colours', function() {
 		assert.about(Color.hex('#123').screen(Color.hex('#456')), Color.hex('#526d86'));
 		assert.about(Color.hex('#789').screen(Color.hex('#101')), Color.hex('#8189a1'));
 		assert.about(Color.hex('#112').screen(Color.hex('#131')), Color.hex('#224232'));
 		assert.about(Color.hex('#415').screen(Color.hex('#160')), Color.hex('#527156'));
+
+		assert.about(Color.hex('#1238').screen(Color.hex('#4568')), Color.hex('#526d86c8'));
+		assert.about(Color.hex('#7898').screen(Color.hex('#1018')), Color.hex('#8189a1c8'));
+		assert.about(Color.hex('#1128').screen(Color.hex('#1318')), Color.hex('#224232c8'));
+		assert.about(Color.hex('#4158').screen(Color.hex('#1608')), Color.hex('#527156c8'));
 	});
 	it('Should overlay colours', function() {
 		assert.about(Color.hex('#123').overlay(Color.hex('#456')), Color.hex('#091729'));
 		assert.about(Color.hex('#789').overlay(Color.hex('#101')), Color.hex('#101141'));
 		assert.about(Color.hex('#112').overlay(Color.hex('#131')), Color.hex('#020705'));
 		assert.about(Color.hex('#415').overlay(Color.hex('#160')), Color.hex('#090e00'));
+
+		assert.about(Color.hex('#1238').overlay(Color.hex('#4568')), Color.hex('#09172988'));
+		assert.about(Color.hex('#7898').overlay(Color.hex('#1018')), Color.hex('#10114188'));
+		assert.about(Color.hex('#1128').overlay(Color.hex('#1318')), Color.hex('#02070588'));
+		assert.about(Color.hex('#4158').overlay(Color.hex('#1608')), Color.hex('#090e0088'));
 	});
 	it('Should dodge colours', function() {
 		assert.about(Color.hex('#123').dodge(Color.hex('#456')), Color.hex('#496280'));
 		assert.about(Color.hex('#789').dodge(Color.hex('#101')), Color.hex('#20002b'));
 		assert.about(Color.hex('#112').dodge(Color.hex('#131')), Color.hex('#123714'));
 		assert.about(Color.hex('#415').dodge(Color.hex('#160')), Color.hex('#176e00'));
+
+		assert.about(Color.hex('#1238').dodge(Color.hex('#4568')), Color.hex('#496280'));
+		assert.about(Color.hex('#7898').dodge(Color.hex('#1018')), Color.hex('#20002b'));
+		assert.about(Color.hex('#1128').dodge(Color.hex('#1318')), Color.hex('#123714'));
+		assert.about(Color.hex('#4158').dodge(Color.hex('#1608')), Color.hex('#176e00'));
 	});
 	it('Should burn colours', function() {
 		assert.about(Color.hex('#999').burn(Color.hex('#999')), Color.hex('#545454'));
 		assert.about(Color.hex('#999').burn(Color.hex('#ccc')), Color.hex('#aaaaaa'));
 		assert.about(Color.hex('#ccc').burn(Color.hex('#999')), Color.hex('#7f7f7f'));
 		assert.about(Color.hex('#CCC').burn(Color.hex('#CCC')), Color.hex('#bfbfbf'));
+
+		assert.about(Color.hex('#9998').burn(Color.hex('#9998')), Color.hex('#54545420'));
+		assert.about(Color.hex('#9998').burn(Color.hex('#ccc8')), Color.hex('#aaaaaa20'));
+		assert.about(Color.hex('#ccc8').burn(Color.hex('#9998')), Color.hex('#7f7f7f20'));
+		assert.about(Color.hex('#CCC8').burn(Color.hex('#CCC8')), Color.hex('#bfbfbf20'));
 	});
 	it('Should raise to exponents', function() {
 		assert.about(Color.hex('#111').exponent(2), Color.hex('#010101'));
 		assert.about(Color.hex('#888').exponent(2), Color.hex('#494949'));
 		assert.about(Color.hex('#fff').exponent(2), Color.hex('#ffffff'));
+
+		assert.about(Color.hex('#1118').exponent(2), Color.hex('#01010149'));
+		assert.about(Color.hex('#8888').exponent(2), Color.hex('#49494949'));
+		assert.about(Color.hex('#fff8').exponent(2), Color.hex('#ffffff49'));
 	});
 });

@@ -525,26 +525,28 @@ Color.hex = function hex(string) {
 		string = string.substr(1);
 	}
 
-	var baseLength = (string.length % 2) ? string.length : string.length / 2;
+	var len = string.length;
+	var hasAlphaComponent = (len % 3 !== 0);
 
-	if (baseLength === 3) {
+	if (!hasAlphaComponent && (len === 6 || len === 3)) {
 		var rgb = (function(string) {
 
-			if (string.length === 3) {
+			if (len === 3) {
 				return [string[0] + string[0], string[1] + string[1], string[2] + string[2]];
-			} else if (string.length === 6) {
+			} else if (len === 6) {
 				return [string.substr(0, 2), string.substr(2, 2), string.substr(4, 2)];
 			}
 		})(string).map(function(channelString) {
 			return parseInt(channelString, 16);
 		});
 
-		return new Color(rgb);
-	} else if (baseLength === 4) {
-		var offset = string.length / 4;
+		return new Color(rgb, 'rgb');
+	} else if (hasAlphaComponent && (len === 8 || len === 4)) {
+		var offset = len / 4;
+		var alphaMultiplicationFactor = (len === 4) ? 17 : 1;
 
-		var alpha = parseInt(string.substr(-offset), 16) / 256;
-		var newColor = Color.hex(string.substr(0, string.length - offset));
+		var alpha = parseInt(string.substr(-offset), 16) * alphaMultiplicationFactor / 255;
+		var newColor = Color.hex(string.substr(0, len - offset));
 		newColor.alpha = alpha;
 
 		return newColor;
@@ -580,7 +582,7 @@ function colorOperationFactory(operation) {
 		var b = other.convert('rgb');
 
 		var values = zipValues(a.values, b.values).map(operation);
-		var alpha = operation([this.alpha, other.alpha]);
+		var alpha = operation([this.alpha * 255, other.alpha * 255]) / 255;
 
 		return new Color(values, alpha, 'rgb');
 	};
