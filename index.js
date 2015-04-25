@@ -57,7 +57,7 @@ Color.prototype.toString = function toString() {
 	var alphaText = '';
 
 	if (this.alpha !== 1) {
-		if (['rgb', 'hsv'].indexOf(this.space) !== -1) {
+		if (['rgb', 'hsl'].indexOf(this.space) !== -1) {
 			functionSuffix = 'a';
 			alphaText = ', ' + this.alpha;
 		} else {
@@ -149,17 +149,21 @@ lossy.
 @param {Color.spaces} space - The space in which to convert the color to
 */
 Color.prototype.convert = function convert(space) {
-	if (this.space === space) {
-		return this.clone();
-	} else if (this.originalColor) {
-		return this.originalColor.convert(space);
+	if (Color.spaces[space]) {
+		if (this.space === space) {
+			return this.clone();
+		} else if (this.originalColor) {
+			return this.originalColor.convert(space);
+		} else {
+			var newValues = colorSpace[this.space][space](this.values);
+
+			var newColor = new Color(newValues, this.alpha, space);
+			newColor.originalColor = this.clone();
+
+			return newColor;
+		}
 	} else {
-		var newValues = colorSpace[this.space][space](this.values);
-
-		var newColor = new Color(newValues, this.alpha, space);
-		newColor.originalColor = this.clone();
-
-		return newColor;
+		throw new Error('Invalid color space: ' + space);
 	}
 };
 /*

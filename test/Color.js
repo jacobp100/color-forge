@@ -46,8 +46,10 @@ describe('Color', function() {
 	it('Should convert colours to string format', function() {
 		assert.equal(Color.rgb([255, 255, 255]).toString(), 'rgb(255, 255, 255)');
 		assert.equal(Color.rgb([255, 255, 255], 0.5).toString(), 'rgba(255, 255, 255, 0.5)');
-		assert.equal(Color.rgb([255, 255, 255]).convert('hsl').toString(), 'rgb(255, 255, 255)');
-		assert.equal(Color.rgb([255, 255, 255], 0.5).convert('hsl').toString(), 'rgba(255, 255, 255, 0.5)');
+		assert.equal(Color.hsl([180, 100, 50]).toString(), 'hsl(180, 100, 50)');
+		assert.equal(Color.hsl([180, 100, 50], 0.5).toString(), 'hsla(180, 100, 50, 0.5)');
+		assert.equal(Color.hsv([180, 100, 50]).toString(), 'hsv(180, 100, 50)');
+		assert.equal(Color.hsv([180, 100, 50], 0.5).toString(), 'hsv(180, 100, 50, [alpha = 0.5])');
 	});
 	it('Should recognise hex values', function() {
 		assert.equal(Color.hex('#000').toHex(), '#000000');
@@ -68,27 +70,11 @@ describe('Color', function() {
 		assert.equal(Color.css('red').toHex(), '#ff0000');
 		assert.equal(Color.css('rebeccapurple').toHex(), '#663399');
 	});
-	it('Should convert hsl to rgb', function() {
-		assert.about(Color.hsl([0, 0, 0]).convert('rgb'), Color.rgb([0, 0, 0]));
-		assert.about(Color.hsl([0, 0, 50]).convert('rgb'), Color.rgb([128, 128, 128]));
-		assert.about(Color.hsl([0, 0, 100]).convert('rgb'), Color.rgb([255, 255, 255]));
-
-		assert.about(Color.hsl([0, 100, 25]).convert('rgb'), Color.rgb([128, 0, 0]));
-		assert.about(Color.hsl([120, 100, 25]).convert('rgb'), Color.rgb([0, 128, 0]));
-		assert.about(Color.hsl([240, 100, 25]).convert('rgb'), Color.rgb([0, 0, 128]));
-
-		assert.about(Color.hsl([0, 100, 50]).convert('rgb'), Color.rgb([255, 0, 0]));
-		assert.about(Color.hsl([30, 100, 50]).convert('rgb'), Color.rgb([255, 128, 0]));
-		assert.about(Color.hsl([60, 100, 50]).convert('rgb'), Color.rgb([255, 255, 0]));
-		assert.about(Color.hsl([90, 100, 50]).convert('rgb'), Color.rgb([128, 255, 0]));
-		assert.about(Color.hsl([120, 100, 50]).convert('rgb'), Color.rgb([0, 255, 0]));
-		assert.about(Color.hsl([150, 100, 50]).convert('rgb'), Color.rgb([0, 255, 128]));
-		assert.about(Color.hsl([180, 100, 50]).convert('rgb'), Color.rgb([0, 255, 255]));
-		assert.about(Color.hsl([210, 100, 50]).convert('rgb'), Color.rgb([0, 128, 255]));
-		assert.about(Color.hsl([240, 100, 50]).convert('rgb'), Color.rgb([0, 0, 255]));
-		assert.about(Color.hsl([270, 100, 50]).convert('rgb'), Color.rgb([128, 0, 255]));
-		assert.about(Color.hsl([300, 100, 50]).convert('rgb'), Color.rgb([255, 0, 255]));
-		assert.about(Color.hsl([330, 100, 50]).convert('rgb'), Color.rgb([255, 0, 128]));
+	it('Should perform lossless conversions', function() {
+		assert.deepEqual(
+			Color.hex('#123456').convert('hsl').convert('hsv').convert('cmyk').convert('lab').convert('rgb').values,
+			Color.hex('#123456').values
+		);
 	});
 	// http://colorblendy.com/
 	it('Should multiply colours', function() {
