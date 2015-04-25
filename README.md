@@ -41,13 +41,16 @@ var color = Color.hsl([180, 100, 50], 1);
 var color = Color.hsl([180, 100, 50]);
 ```
 
-In addition, you can create a color from a hex code as follows.
+In addition, you can create a color from a hex code as follows, with the
+leading hash (#) being optional.
 
 ```js
 Color.hex('#123');
-Color.hex('123');
 Color.hex('#112233');
-Color.hex('112233');
+Color.hex('#1234'); // has alpha of ~0.26
+Color.hex('#1223344'); // has alpha of ~0.26
+
+Color.hex('123');
 ```
 
 You can also create a color from a css name.
