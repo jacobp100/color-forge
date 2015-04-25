@@ -33,6 +33,7 @@
     * [.convert(space)](#Color#convert)
     * [.lighten([amount], [mode])](#Color#lighten)
     * [.darken([amount], [mode])](#Color#darken)
+    * [.channelMultiply(value)](#Color#channelMultiply)
     * [.add(other)](#Color#add)
     * [.subtract(other)](#Color#subtract)
     * [.multiply(other)](#Color#multiply)
@@ -142,11 +143,22 @@ Returns a new color that is the result of darkening the current color.
 | [amount] | <code>number</code> | <code>0.1</code> | The amount to lighten by, between 0 and 1 |
 | [mode] | <code>[spaces](#Color.spaces)</code> | <code>&#x27;hsl&#x27;</code> | The space to use to lighten, which must 	have a lightness component |
 
+<a name="Color#channelMultiply"></a>
+### color.channelMultiply(value)
+Multiplies each RGB value by the specified amount.
+
+**Kind**: instance method of <code>[Color](#Color)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>number</code> | The value to multiply each by |
+
 <a name="Color#add"></a>
 ### color.add(other)
 Returns a new color that is the result of adding the channels of the current
 color and another color. The resulting color has channels clipped at a maximum
-of 255.
+of 255, and an alpha equal to the square root of the sum of the squares of the
+alpha values clipped at one.
 
 **Kind**: instance method of <code>[Color](#Color)</code>  
 
@@ -158,7 +170,8 @@ of 255.
 ### color.subtract(other)
 Returns a new color that is the result of subtracting the channels of the
 current color and another color. The resulting color has channels clipped at a
-minimum of 0.
+minimum of 0, and an alpha equal to the square root of the sum of the squares
+of the alpha values clipped at one.
 
 **Kind**: instance method of <code>[Color](#Color)</code>  
 

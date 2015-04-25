@@ -116,6 +116,12 @@ describe('Color', function() {
 		assert.about(Color.hex('#123').subtract(Color.hex('#456')), Color.hex('#000'));
 		assert.about(Color.hex('#456').subtract(Color.hex('#123')), Color.hex('#333'));
 	});
+	it('Should multiply channels', function() {
+		assert.about(Color.hex('#f80').channelMultiply(2), Color.hex('#ffff00'));
+		assert.about(Color.hex('#360').channelMultiply(2), Color.hex('#66cc00'));
+
+		assert.about(Color.hex('#3603').channelMultiply(2), Color.hex('#66cc0066'));
+	});
 	it('Should divide colours', function() {
 		assert.about(Color.hex('#123').divide(Color.hex('#149')), Color.hex('#ff8055'));
 	});
