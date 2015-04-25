@@ -83,6 +83,9 @@ describe('Color', function() {
 		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'hsv').convert('rgb'), Color.hex('#ffff00'));
 		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'lab').convert('rgb'), Color.hex('#c9ab00'));
 		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'lchab').convert('rgb'), Color.hex('#d7a700'));
+
+		assert.about(Color.hex('#800000').mix(Color.hex('#ff0000'), 0, 'rgb').convert('rgb'), Color.hex('#800000'));
+		assert.about(Color.hex('#800000').mix(Color.hex('#ff0000'), 0.3, 'rgb').convert('rgb'), Color.hex('#a70000'));
 	});
 	// Conformance with http://sassmeister.com (where 25 on there is 0.25 here)
 	it('Should darken colours via rgb', function() {

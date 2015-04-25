@@ -211,10 +211,10 @@ Color.prototype.mix = function mix(other, amountMode, mode) {
 
 			if (Math.abs(a - b) <= 180) {
 				// Clockwise (I guess?)
-				value = a - (a - b) * amount;
+				value = a * (1 - amount) + b * amount;
 			} else {
 				// Anti-clockwise
-				value = a + (a - b) * amount;
+				value = a * (1 - amount) - b * amount;
 			}
 
 			if (value < 0) {
