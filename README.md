@@ -117,3 +117,8 @@ color1.toHex();        // Gives the hex code
 color1.toCss();        // Gives css value if exactly identical, else null
 color1.toClosestCss(); // Gives closest css
 ```
+
+Licence
+-------
+
+MIT
