@@ -182,13 +182,19 @@ Color.prototype.mix = function mix(other, amountMode, mode) {
 	if (mode === undefined) {
 		if (typeof amountMode === 'number') {
 			amount = amountMode;
-			mode = 'rgb';
-		} else {
-			amount = 0.5;
+		} else if (typeof amountMode === 'string') {
 			mode = amountMode;
 		}
-	} if (amountMode === undefined) {
+	} else {
+		amount = amountMode;
+	}
+
+	if (amount === undefined) {
 		amount = 0.5;
+	}
+
+	if (mode === undefined) {
+		mode = 'rgb';
 	}
 
 	var thisValues = this.convert(mode).values;
