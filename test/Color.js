@@ -40,6 +40,14 @@ describe('Color', function() {
 		assert.equal(Color.rgb([0, 0, 0]).toHex(), '#000000');
 		assert.equal(Color.rgb([128, 128, 128]).toHex(), '#808080');
 		assert.equal(Color.rgb([255, 255, 255]).toHex(), '#ffffff');
+		assert.equal(Color.rgb([255, 255, 255], 0.5).toHex(), '#ffffff80');
+		assert.equal(Color.rgb([255, 255, 255], 0.5).toHex(), '#ffffff80');
+	});
+	it('Should convert colours to string format', function() {
+		assert.equal(Color.rgb([255, 255, 255]).toString(), 'rgb(255, 255, 255)');
+		assert.equal(Color.rgb([255, 255, 255], 0.5).toString(), 'rgba(255, 255, 255, 0.5)');
+		assert.equal(Color.rgb([255, 255, 255]).convert('hsl').toString(), 'rgb(255, 255, 255)');
+		assert.equal(Color.rgb([255, 255, 255], 0.5).convert('hsl').toString(), 'rgba(255, 255, 255, 0.5)');
 	});
 	it('Should recognise hex values', function() {
 		assert.equal(Color.hex('#000').toHex(), '#000000');
@@ -47,7 +55,18 @@ describe('Color', function() {
 		assert.equal(Color.hex('#888').toHex(), '#888888');
 		assert.equal(Color.hex('#888888').toHex(), '#888888');
 		assert.equal(Color.hex('#fff').toHex(), '#ffffff');
-		assert.equal(Color.hex('#ffffff').toHex(), '#ffffff');
+		assert.equal(Color.hex('#ffffff80').toHex(), '#ffffff80');
+	});
+	it('Should convert values to css colour names', function() {
+		assert.equal(Color.hex('#f00').toCss(), 'red');
+		assert.equal(Color.hex('#ff0001').toCss(), null);
+		assert.equal(Color.hex('#f00').toClosestCss(), 'red');
+		assert.equal(Color.hex('#ff0001').toClosestCss(), 'red');
+		assert.equal(Color.hex('#639').toCss(), 'rebeccapurple');
+	});
+	it('Should convert css colour names to values', function() {
+		assert.equal(Color.css('red').toHex(), '#ff0000');
+		assert.equal(Color.css('rebeccapurple').toHex(), '#663399');
 	});
 	it('Should convert hsl to rgb', function() {
 		assert.about(Color.hsl([0, 0, 0]).convert('rgb'), Color.rgb([0, 0, 0]));

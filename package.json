@@ -1,11 +1,12 @@
 {
   "name": "color-forge",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple color system based on the work of https://github.com/dfcreative/color-space",
   "url": "https://github.com/jacobp100/color-forge",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "doc": "jsdoc2md index.js > doc.md",
+    "test": "mocha"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,7 @@
     "color-space": "^1.1.2"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^1.0.3",
     "mocha": "^2.2.4"
   }
 }
