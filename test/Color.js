@@ -85,7 +85,7 @@ describe('Color', function() {
 		assert.about(Color.hex('#f00').mix(Color.hex('#0f0'), 'lchab').convert('rgb'), Color.hex('#d7a700'));
 
 		assert.about(Color.hex('#800000').mix(Color.hex('#ff0000'), 0, 'rgb').convert('rgb'), Color.hex('#800000'));
-		assert.about(Color.hex('#800000').mix(Color.hex('#ff0000'), 0.3, 'rgb').convert('rgb'), Color.hex('#a70000'));
+		assert.about(Color.hex('#800000').mix(Color.hex('#ff0000'), 0.3, 'rgb').convert('rgb'), Color.hex('#a60000'));
 	});
 	// Conformance with http://sassmeister.com (where 25 on there is 0.25 here)
 	it('Should darken colours via rgb', function() {
@@ -115,6 +115,9 @@ describe('Color', function() {
 		assert.about(Color.hex('#f00').subtract(Color.hex('#f00')), Color.hex('#000'));
 		assert.about(Color.hex('#123').subtract(Color.hex('#456')), Color.hex('#000'));
 		assert.about(Color.hex('#456').subtract(Color.hex('#123')), Color.hex('#333'));
+	});
+	it('Should divide colours', function() {
+		assert.about(Color.hex('#123').divide(Color.hex('#149')), Color.hex('#ff8055'));
 	});
 	// http://colorblendy.com/
 	it('Should multiply colours', function() {

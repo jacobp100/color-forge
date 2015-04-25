@@ -336,7 +336,7 @@ clipped at a maximum of 255.
 @param {Color} other - The other color used to perform the operation
 */
 Color.prototype.divide = colorOperationFactory(function divide(zip) {
-	return Math.max(255 * zip[0] / zip[1], 255);
+	return Math.min(255 * zip[0] / zip[1], 255);
 });
 /**
 Returns a new color that is the result of the screen operation of the current
