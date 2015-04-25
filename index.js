@@ -73,13 +73,7 @@ alpha is less than one.
 */
 Color.prototype.toHex = function toHex() {
 	var hex = '#' + this.convert('rgb').values.map(function asHex(raw) {
-		var hex = hexDouble(Math.min(Math.round(raw), 255));
-
-		if (hex.length === 2) {
-			return hex;
-		} else {
-			return '0' + hex;
-		}
+		return hexDouble(Math.min(Math.round(raw), 255));
 	}).join('');
 
 	if (this.alpha >= 1) {
