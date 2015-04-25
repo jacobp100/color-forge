@@ -245,7 +245,7 @@ Color.prototype.lighten = function lighten(amount, mode) {
 		var min = colorMode.min[index];
 		var max = colorMode.max[index];
 
-		var brightness = newColor.values[index] + amount * (max - min) / 2;
+		var brightness = newColor.values[index] + amount * (max - min);
 		// Clip brightness to bounds
 		newColor.values[index] = Math.min(max, Math.max(min, brightness));
 
@@ -265,6 +265,10 @@ Returns a new color that is the result of darkening the current color.
 	have a lightness component
 */
 Color.prototype.darken = function darken(amount, mode) {
+	if (amount === undefined) {
+		amount = 0.1; // Otherwise will be NaN in #lighten
+	}
+
 	return this.lighten(-amount, mode);
 };
 /**

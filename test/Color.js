@@ -77,16 +77,16 @@ describe('Color', function() {
 			Color.hex('#123456').values
 		);
 	});
-	// Conformance with http://sassmeister.com (where 25 on there is 0.5 here)
+	// Conformance with http://sassmeister.com (where 25 on there is 0.25 here)
 	it('Should darken colours via rgb', function() {
-		assert.about(Color.hex('#fff').darken(0.5), Color.hex('#bfbfbf'));
-		assert.about(Color.hex('#f80').darken(0.5), Color.hex('#804400'));
+		assert.about(Color.hex('#fff').darken(0.5), Color.hex('#808080'));
+		assert.about(Color.hex('#f80').darken(0.5), Color.hex('#000000'));
 		assert.about(Color.hex('#000').darken(0.5), Color.hex('#000000'));
 	});
 	it('Should lighten colours via rgb', function() {
 		assert.about(Color.hex('#fff').lighten(0.5), Color.hex('#ffffff'));
-		assert.about(Color.hex('#f80').lighten(0.5), Color.hex('#ffc380'));
-		assert.about(Color.hex('#000').lighten(0.5), Color.hex('#404040'));
+		assert.about(Color.hex('#f80').lighten(0.5), Color.hex('#ffffff'));
+		assert.about(Color.hex('#000').lighten(0.5), Color.hex('#808080'));
 	});
 	it('Should add colours', function() {
 		assert.about(Color.hex('#000').add(Color.hex('#000')), Color.hex('#000'));
