@@ -107,4 +107,9 @@ describe('Color', function() {
 		assert.about(Color.hex('#ccc').burn(Color.hex('#999')), Color.hex('#7f7f7f'));
 		assert.about(Color.hex('#CCC').burn(Color.hex('#CCC')), Color.hex('#bfbfbf'));
 	});
+	it('Should raise to exponents', function() {
+		assert.about(Color.hex('#111').exponent(2), Color.hex('#010101'));
+		assert.about(Color.hex('#888').exponent(2), Color.hex('#494949'));
+		assert.about(Color.hex('#fff').exponent(2), Color.hex('#ffffff'));
+	});
 });

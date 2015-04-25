@@ -2,9 +2,6 @@
 	"env": {
 		"node": true
 	},
-	"globals": {
-		"currencies": true
-	},
 	"rules": {
 		"quotes": [1, "single", "avoid-escape"],
 		"no-use-before-define": ["nofunc"],

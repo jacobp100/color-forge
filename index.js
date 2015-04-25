@@ -383,6 +383,22 @@ Color.prototype.burn = colorOperationFactory(function burn(zip) {
 		return 0;
 	}
 });
+/**
+Returns a new color that is the result of raising each power to an exponent.
+The resulting color has channels clipped at a maximum of 255.
+
+@function
+
+@param {number} power - The power to raise each channel by
+*/
+Color.prototype.exponent = function exponent(power) {
+	var values = this.convert('rgb').values.map(function(value) {
+		return Math.min(Math.pow(value / 255, power), 255) * 255;
+	});
+	var alpha = Math.pow(this.alpha, power);
+
+	return new Color(values, alpha, 'rgb');
+};
 
 
 
@@ -566,7 +582,7 @@ function colorOperationFactory(operation) {
 		var values = zipValues(a.values, b.values).map(operation);
 		var alpha = operation([this.alpha, other.alpha]);
 
-		return new Color(values, alpha);
+		return new Color(values, alpha, 'rgb');
 	};
 }
 

@@ -41,6 +41,7 @@
     * [.overlay(other)](#Color#overlay)
     * [.dodge(other)](#Color#dodge)
     * [.burn(other)](#Color#burn)
+    * [.exponent(power)](#Color#exponent)
   * _static_
     * [.spaces](#Color.spaces)
     * [.ciecam](#Color.ciecam) : <code>[ColorShorthand](#ColorShorthand)</code>
@@ -244,6 +245,17 @@ The resulting color has channels clipped at a maximum of 255.
 | Param | Type | Description |
 | --- | --- | --- |
 | other | <code>[Color](#Color)</code> | The other color used to perform the operation |
+
+<a name="Color#exponent"></a>
+### color.exponent(power)
+Returns a new color that is the result of raising each power to an exponent.
+The resulting color has channels clipped at a maximum of 255.
+
+**Kind**: instance method of <code>[Color](#Color)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| power | <code>number</code> | The power to raise each channel by |
 
 <a name="Color.spaces"></a>
 ### Color.spaces
