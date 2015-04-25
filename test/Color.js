@@ -120,7 +120,7 @@ describe('Color', function() {
 		assert.about(Color.hex('#f80').channelMultiply(2), Color.hex('#ffff00'));
 		assert.about(Color.hex('#360').channelMultiply(2), Color.hex('#66cc00'));
 
-		assert.about(Color.hex('#3603').channelMultiply(2), Color.hex('#66cc0066'));
+		assert.about(Color.hex('#3603').channelMultiply(2), Color.hex('#66cc0033'));
 	});
 	it('Should divide colours', function() {
 		assert.about(Color.hex('#123').divide(Color.hex('#149')), Color.hex('#ff8055'));

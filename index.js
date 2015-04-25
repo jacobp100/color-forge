@@ -290,7 +290,8 @@ Color.prototype.darken = function darken(amount, mode) {
 	return this.lighten(-amount, mode);
 };
 /**
-Multiplies each RGB value by the specified amount.
+Multiplies each RGB value by the specified amount. The alpha value remains
+unchanged.
 
 @param {number} value - The value to multiply each by
 */
@@ -298,9 +299,8 @@ Color.prototype.channelMultiply = function channelMultiply(value) {
 	var values = this.convert('rgb').values.map(function(channel) {
 		return Math.min(channel * value, 255);
 	});
-	var alpha = Math.min(this.alpha * value, 1);
 
-	return new Color(values, alpha, 'rgb');
+	return new Color(values, this.alpha, 'rgb');
 };
 /**
 Returns a new color that is the result of adding the channels of the current
