@@ -30,7 +30,15 @@ or since the alpha defaults to 1, and the color space defaults to 'rgb', this
 can be written as follows.
 
 ```js
-var color = Color.rgb([255, 0, 0]);
+var color = Color([255, 0, 0]);
+```
+
+To create a color in a specific space, you may also use the following
+shorthand, which accepts the parameters `values, alpha = 1`.
+
+```js
+var color = Color.hsl([180, 100, 50], 1);
+var color = Color.hsl([180, 100, 50]);
 ```
 
 In addition, you can create a color from a hex code as follows.
