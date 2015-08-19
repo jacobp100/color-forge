@@ -92,6 +92,8 @@ describe('Color', function() {
 		assert.about(Color.hex('#fff').darken(0.5), Color.hex('#808080'));
 		assert.about(Color.hex('#f80').darken(0.5), Color.hex('#000000'));
 		assert.about(Color.hex('#000').darken(0.5), Color.hex('#000000'));
+
+		assert.about(Color.hsl([0, 100, 100]).darken(0.5).convert('rgb'), Color.hex('#ff0000'));
 	});
 	it('Should lighten colours via rgb', function() {
 		assert.about(Color.hex('#fff').lighten(0.5), Color.hex('#ffffff'));
