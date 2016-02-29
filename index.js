@@ -343,7 +343,9 @@ clipped at a maximum of 255.
 @param {Color} other - The other color used to perform the operation
 */
 Color.prototype.divide = colorOperationFactory(function divide(zip) {
-	return Math.min(255 * zip[0] / zip[1], 255);
+	var value = zip[0] / zip[1];
+	// Make 0/0 equal to 0
+	return Math.min(255 * (isNaN(value) ? 0 : value), 255);
 });
 /**
 Returns a new color that is the result of the screen operation of the current
@@ -389,7 +391,8 @@ The resulting color has channels clipped at a maximum of 255.
 */
 Color.prototype.dodge = colorOperationFactory(function dodge(zip) {
 	if (zip[0] < 255) {
-		return Math.min(255, (zip[1] * 255) / (255 - zip[0]));
+		var value = (zip[1] * 255) / (255 - zip[0]);
+		return Math.min(255, isNaN(value) ? Infinity : value);
 	} else {
 		return 255;
 	}
@@ -409,7 +412,8 @@ The resulting color has channels clipped at a maximum of 255.
 */
 Color.prototype.burn = colorOperationFactory(function burn(zip) {
 	if (zip[0] >= 0) {
-		return Math.max(0, 255 - 255 * (255 - zip[1]) / zip[0]);
+		var value = (255 - zip[1]) / zip[0];
+		return Math.max(0, 255 - 255 * (isNaN(value) ? -Infinity : value));
 	} else {
 		return 0;
 	}

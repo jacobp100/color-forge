@@ -4,9 +4,9 @@
 	},
 	"rules": {
 		"quotes": [1, "single", "avoid-escape"],
-		"no-use-before-define": ["nofunc"],
-		"no-shadow": [false],
-		"no-labels": [false],
-		"no-wrap-func": [false]
+		"no-use-before-define": [1, "nofunc"],
+		"no-shadow": [0],
+		"no-labels": [0],
+		"no-wrap-func": [0]
 	}
 }
